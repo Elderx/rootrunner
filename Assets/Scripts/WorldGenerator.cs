@@ -33,7 +33,7 @@ public class WorldGenerator : MonoBehaviour
         for (int i = 0; i < obstacles.Length; i++)
         {
             Vector3 position = new Vector2(Random.Range(-10, 10), mainCamera.position.y - Random.Range(10, 30));
-            GameObject obstacle = Instantiate(spawnObjects[Random.Range(0, spawnObjects.Length - 1)], position, Quaternion.identity);
+            GameObject obstacle = Instantiate(spawnObjects[Random.Range(0, spawnObjects.Length)], position, Quaternion.identity);
         }
     }
 }
