@@ -20,7 +20,8 @@ public class WorldGenerator : MonoBehaviour
     void Update()
     {
         elapsed += Time.deltaTime;
-        if (elapsed >= 1f) {    // 1 second
+        if (elapsed >= 1f) 
+        {
             elapsed = elapsed % 1f;
             SpawnObject(obstacles);
             SpawnObject(boosts);
@@ -32,8 +33,25 @@ public class WorldGenerator : MonoBehaviour
         // Generate obstacles
         for (int i = 0; i < obstacles.Length; i++)
         {
-            Vector3 position = new Vector2(Random.Range(-10, 10), mainCamera.position.y - Random.Range(10, 30));
-            GameObject obstacle = Instantiate(spawnObjects[Random.Range(0, spawnObjects.Length)], position, Quaternion.identity);
+            Vector2 position = new Vector2(Random.Range(-10, 10), mainCamera.position.y - Random.Range(10, 30));
+            GameObject newObject = Instantiate(spawnObjects[Random.Range(0, spawnObjects.Length)], position, Quaternion.identity);
+
+            //Not great but mauybe it works
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Water"))
+            {
+                if (obj.GetComponent<Collider2D>().bounds.Intersects(newObject.GetComponent<Collider2D>().bounds) && obj != newObject)
+                {
+                    Destroy(obj);
+                }
+            }
+
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Obstacle"))
+            {
+                if (obj.GetComponent<Collider2D>().bounds.Intersects(newObject.GetComponent<Collider2D>().bounds) && obj != newObject)
+                {
+                    Destroy(obj);
+                }
+            }
         }
     }
 }
