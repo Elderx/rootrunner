@@ -8,7 +8,15 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] private GameObject[] obstacles;
     [SerializeField] private GameObject[] boosts;
 
-     float elapsed = 0f;
+    [Tooltip("Spawn interval in seconds")]
+    [SerializeField] private float interval = 1f;
+
+    [Tooltip("Obstacle spawn rate")]
+    [SerializeField] private int spawnRate = 1;
+    [SerializeField] int spawnAreaMinY = -9;
+    [SerializeField] int spawnAreaMaxY = 10;
+
+    float elapsed = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,37 +28,40 @@ public class WorldGenerator : MonoBehaviour
     void Update()
     {
         elapsed += Time.deltaTime;
-        if (elapsed >= 1f) 
+        if (elapsed >= interval) 
         {
-            elapsed = elapsed % 1f;
-            SpawnObject(obstacles);
+            elapsed = elapsed % interval;
+
+            for(int i = 0; i < spawnRate; i++)
+            {
+                SpawnObject(obstacles);
+            }
+
             SpawnObject(boosts);
         }
+
+        mainCamera.transform.Translate(Vector3.down * Time.deltaTime * 2, Space.World);
     }
 
     void SpawnObject(GameObject[] spawnObjects)
     {
-        // Generate obstacles
-        for (int i = 0; i < obstacles.Length; i++)
+        Vector2 position = new Vector2(Random.Range(spawnAreaMinY, spawnAreaMaxY), mainCamera.position.y - Random.Range(10, 30));
+        GameObject newObject = Instantiate(spawnObjects[Random.Range(0, spawnObjects.Length)], position, Quaternion.identity);
+
+        //Not great but maybe it works
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Water"))
         {
-            Vector2 position = new Vector2(Random.Range(-10, 10), mainCamera.position.y - Random.Range(10, 30));
-            GameObject newObject = Instantiate(spawnObjects[Random.Range(0, spawnObjects.Length)], position, Quaternion.identity);
-
-            //Not great but mauybe it works
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Water"))
+            if (obj.GetComponent<Collider2D>().bounds.Intersects(newObject.GetComponent<Collider2D>().bounds) && obj != newObject)
             {
-                if (obj.GetComponent<Collider2D>().bounds.Intersects(newObject.GetComponent<Collider2D>().bounds) && obj != newObject)
-                {
-                    Destroy(obj);
-                }
+                Destroy(newObject);
             }
+        }
 
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Obstacle"))
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Obstacle"))
+        {
+            if (obj.GetComponent<Collider2D>().bounds.Intersects(newObject.GetComponent<Collider2D>().bounds) && obj != newObject)
             {
-                if (obj.GetComponent<Collider2D>().bounds.Intersects(newObject.GetComponent<Collider2D>().bounds) && obj != newObject)
-                {
-                    Destroy(obj);
-                }
+                Destroy(newObject);
             }
         }
     }
