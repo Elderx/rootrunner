@@ -1274,6 +1274,7 @@ MonoBehaviour:
   visitTreshHold: 0.1
   lineRenderer: {fileID: 2029901125}
   cam: {fileID: 519420031}
+  drinkSound: {fileID: 6921000108445207765, guid: 3d71f5553f4dc29419d957924b68f6e2, type: 3}
   playerWidth: 0.1
   waterText: {fileID: 1296928730}
   depthText: {fileID: 1724154574}
