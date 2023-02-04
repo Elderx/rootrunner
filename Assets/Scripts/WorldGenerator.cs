@@ -7,6 +7,7 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] private Transform mainCamera;
     [SerializeField] private GameObject[] obstacles;
     [SerializeField] private GameObject[] boosts;
+    [SerializeField] private GameObject background;
 
     [Tooltip("Spawn interval in seconds")]
     [SerializeField] private float interval = 1f;
@@ -28,7 +29,7 @@ public class WorldGenerator : MonoBehaviour
     void Update()
     {
         elapsed += Time.deltaTime;
-        if (elapsed >= interval) 
+        if (elapsed >= interval)
         {
             elapsed = elapsed % interval;
 
@@ -38,6 +39,11 @@ public class WorldGenerator : MonoBehaviour
             }
 
             SpawnObject(boosts);
+        }
+
+        if((0 - mainCamera.position.y) % 10 >= 0 && (0 - mainCamera.position.y) % 10 <= 0.1f)
+        {
+            SpawnBackground(mainCamera.position.y - 10);
         }
 
         CleanupObjects();
@@ -66,6 +72,12 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
+    void SpawnBackground(float yPos)
+    {
+        Vector2 position = new Vector2(0, yPos);
+        GameObject newObject = Instantiate(background, position, Quaternion.identity);
+    }
+
     void CleanupObjects()
     {
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Water"))
@@ -77,6 +89,14 @@ public class WorldGenerator : MonoBehaviour
         }
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Obstacle"))
+        {
+            if (obj.transform.position.y > mainCamera.position.y + 20)
+            {
+                Destroy(obj);
+            }
+        }
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Background"))
         {
             if (obj.transform.position.y > mainCamera.position.y + 20)
             {

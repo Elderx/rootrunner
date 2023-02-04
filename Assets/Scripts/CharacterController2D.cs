@@ -183,6 +183,7 @@ public class CharacterController2D : MonoBehaviour
         if (col.gameObject.tag == "Water")
         {
           PlayerSizeChange(sizeChange);
+          Destroy(col.gameObject);
         }
 
         if (col.gameObject.tag == "Obstacle") {
