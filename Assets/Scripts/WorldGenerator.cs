@@ -39,8 +39,6 @@ public class WorldGenerator : MonoBehaviour
 
             SpawnObject(boosts);
         }
-
-        mainCamera.transform.Translate(Vector3.down * Time.deltaTime * 2, Space.World);
     }
 
     void SpawnObject(GameObject[] spawnObjects)
