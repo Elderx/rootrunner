@@ -134,6 +134,10 @@ public class CharacterController2D : MonoBehaviour
         float y = player.position.y;
 
         visitedPoints.Add(player.position);
+
+        if (visitedPoints.Count > 1000) {
+          visitedPoints.RemoveAt(0);
+        }
       }
 
       waterText.text = "Water: " + (Mathf.Round(playerWidth * 100));
