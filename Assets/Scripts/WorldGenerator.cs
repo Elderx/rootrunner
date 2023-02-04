@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class WorldGenerator : MonoBehaviour
 {
     [SerializeField] private Transform mainCamera;
+    [SerializeField] private Light2D worldLight;
     [SerializeField] private GameObject[] obstacles;
     [SerializeField] private GameObject[] boosts;
     [SerializeField] private GameObject background;
@@ -41,12 +43,20 @@ public class WorldGenerator : MonoBehaviour
             SpawnObject(boosts);
         }
 
-        if((0 - mainCamera.position.y) % 10 >= 0 && (0 - mainCamera.position.y) % 10 <= 0.1f)
+        if((0 - mainCamera.position.y) % 10 >= 0 && (0 - mainCamera.position.y) % 10 <= 0.2f)
         {
             SpawnBackground(mainCamera.position.y - 10);
         }
 
         CleanupObjects();
+    }
+
+    private void FixedUpdate()
+    {
+        if(worldLight.intensity >= 0.2f) 
+        {
+            worldLight.intensity = 1 - (-mainCamera.position.y / 200);
+        }
     }
 
     void SpawnObject(GameObject[] spawnObjects)
