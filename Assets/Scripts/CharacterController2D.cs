@@ -15,6 +15,7 @@ public class CharacterController2D : MonoBehaviour
     public GameObject startingPosition;
     public float visitTreshHold = 0.1f;
     public LineRenderer lineRenderer;
+    public Camera cam; 
 
     private Rigidbody2D player;       //Store a reference to the Rigidbody2D component required to use 2D Physics.
     private List<Vector3> visitedPoints = new List<Vector3>();
@@ -68,12 +69,17 @@ public class CharacterController2D : MonoBehaviour
         lineRenderer.SetPosition(visitedPoints.Count - 1, player.position);
       }
     }
+
+    void UpdateCamera() {
+      cam.transform.position = new Vector3(player.position.x, player.position.y, cam.transform.position.z);
+    }
  
     //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
     void FixedUpdate()
     {
         MovePlayer();
         RotatePlayer();
+        UpdateCamera();
     /*
       if (horizontal != 0 && vertical != 0) // Check for diagonal movement
       {
