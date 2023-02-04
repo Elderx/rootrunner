@@ -39,6 +39,8 @@ public class WorldGenerator : MonoBehaviour
 
             SpawnObject(boosts);
         }
+
+        CleanupObjects();
     }
 
     void SpawnObject(GameObject[] spawnObjects)
@@ -60,6 +62,25 @@ public class WorldGenerator : MonoBehaviour
             if (obj.GetComponent<Collider2D>().bounds.Intersects(newObject.GetComponent<Collider2D>().bounds) && obj != newObject)
             {
                 Destroy(newObject);
+            }
+        }
+    }
+
+    void CleanupObjects()
+    {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Water"))
+        {
+            if (obj.transform.position.y > mainCamera.position.y + 20)
+            {
+                Destroy(obj);
+            }
+        }
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Obstacle"))
+        {
+            if (obj.transform.position.y > mainCamera.position.y + 20)
+            {
+                Destroy(obj);
             }
         }
     }

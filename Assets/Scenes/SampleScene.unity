@@ -787,6 +787,10 @@ PrefabInstance:
       value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 7854378828571414593, guid: e1ff343c3b20ee44589bb97664f4a7aa, type: 3}
+      propertyPath: interval
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854378828571414593, guid: e1ff343c3b20ee44589bb97664f4a7aa, type: 3}
       propertyPath: spawnRate
       value: 1
       objectReference: {fileID: 0}
@@ -794,6 +798,14 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420032}
+    - target: {fileID: 7854378828571414593, guid: e1ff343c3b20ee44589bb97664f4a7aa, type: 3}
+      propertyPath: spawnAreaMaxY
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854378828571414593, guid: e1ff343c3b20ee44589bb97664f4a7aa, type: 3}
+      propertyPath: spawnAreaMinY
+      value: -14
+      objectReference: {fileID: 0}
     - target: {fileID: 7854378828571414594, guid: e1ff343c3b20ee44589bb97664f4a7aa, type: 3}
       propertyPath: m_RootOrder
       value: 2
