@@ -21,7 +21,7 @@ public class CharacterController2D : MonoBehaviour
     private Transform playerTransform;
 
     private List<Vector3> visitedPoints = new List<Vector3>();
-    private float _verticalInput = 0;
+    // private float _verticalInput = 0;
     private float _horizontalInput = 0;
 
     public float playerMinWidth = 0.1f;
@@ -53,23 +53,39 @@ public class CharacterController2D : MonoBehaviour
     {
         GetPlayerInput();
 
+        MovePlayer();
+
         renderLine();
     }
 
     private void GetPlayerInput() {
       _horizontalInput = Input.GetAxisRaw("Horizontal"); // -1 is left
-      _verticalInput = Input.GetAxisRaw("Vertical"); // -1 is down
     }
 
     private void MovePlayer()
     {
-        player.velocity = transform.right * Mathf.Clamp01(_verticalInput) * runSpeed;
+      player.velocity = transform.right * runSpeed;
+
+      if (player.velocity.y > 0) {
+        player.velocity = new Vector2(player.velocity.x, 0);
+      }
     }
 
     private void RotatePlayer()
     {
         float rotation = _horizontalInput * rotationSpeed;
-        transform.Rotate(Vector3.forward * -rotation);
+        Vector3 newRotate = Vector3.forward * -rotation;
+
+        if (this.player.rotation > 0) {
+          if (this.player.velocity.x > 0) {
+            this.player.rotation = 0;
+          } else if (this.player.velocity.x < 0) {
+            this.player.rotation = 180;
+          }
+          return;
+        }
+
+        transform.Rotate(newRotate);
     }
 
 
