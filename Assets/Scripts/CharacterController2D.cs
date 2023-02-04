@@ -35,6 +35,7 @@ public class CharacterController2D : MonoBehaviour
 
     public TMP_Text waterText;
     public TMP_Text depthText;
+    public TMP_Text highscoreText;
 
     void Start()
     {
@@ -52,7 +53,17 @@ public class CharacterController2D : MonoBehaviour
 
         lineRenderer.startWidth = playerWidth;
 
-        //cam.orthographicSize = GetCameraZoom();
+        if (PlayerPrefs.HasKey("highscore") == false) {
+            PlayerPrefs.SetInt("highscore", 0);
+            PlayerPrefs.Save();
+            highscoreText.text = PlayerPrefs.GetInt("highscore").ToString();
+            Debug.Log("Highscore if key false: " + highscoreText.text);
+        }
+        else {
+            Debug.Log("Highscore if key true: " + highscoreText.text);
+            highscoreText.text = PlayerPrefs.GetInt("highscore").ToString();
+            Debug.Log("Highscore after getint: " + highscoreText.text);
+        }
     }
 
     void Update()
@@ -121,6 +132,7 @@ public class CharacterController2D : MonoBehaviour
     //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
     void FixedUpdate()
     {
+    Debug.Log("AAAAAAAAA: " + PlayerPrefs.GetInt("highscore").ToString());
       MovePlayer();
       RotatePlayer();
       UpdateCamera();
@@ -143,13 +155,16 @@ public class CharacterController2D : MonoBehaviour
       waterText.text = "Water: " + (Mathf.Round(playerWidth * 100));
       depthText.text = "Depth: " + (Mathf.Abs(Mathf.Round(player.position.y)));
 
-      if (playerWidth <= 0) {
-        GameOver();
 
+      if (playerWidth <= 0) {
+        PlayerPrefs.SetInt("Score", (int)(Mathf.Abs(Mathf.Round(player.position.y))));  
+        PlayerPrefs.Save();
+        GameOver();
       }
     }
 
     void GameOver() {
+
       SceneManager.LoadScene("MainScene");
       NavigationManager.GameOver = true;
     }
