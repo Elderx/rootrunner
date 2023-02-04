@@ -14,6 +14,8 @@ public class CharacterController2D : MonoBehaviour
     public float rotationSpeed = 5.0f;
 
     public float runSpeed = 5.0f;
+    public float minX = -8.5f;
+    public float maxX = 8.5f;
     public GameObject startingPosition;
     public float visitTreshHold = 0.1f;
     public LineRenderer lineRenderer;
@@ -49,7 +51,7 @@ public class CharacterController2D : MonoBehaviour
 
         lineRenderer.startWidth = playerWidth;
 
-        cam.orthographicSize = GetCameraZoom();
+        //cam.orthographicSize = GetCameraZoom();
     }
 
     void Update()
@@ -71,6 +73,12 @@ public class CharacterController2D : MonoBehaviour
 
       if (player.velocity.y > 0) {
         player.velocity = new Vector2(player.velocity.x, 0);
+      }
+
+      if(player.position.x >= maxX) {
+        player.position = new Vector2(maxX, player.position.y);
+      } else if (player.position.x <= minX) {
+        player.position = new Vector2(minX, player.position.y);
       }
     }
 
@@ -102,7 +110,7 @@ public class CharacterController2D : MonoBehaviour
     }
 
     void UpdateCamera() {
-      cam.transform.position = new Vector3(player.position.x, player.position.y, cam.transform.position.z);
+      cam.transform.position = new Vector3(0, player.position.y, cam.transform.position.z);
     }
 
     float GetCameraZoom() {
@@ -145,7 +153,7 @@ public class CharacterController2D : MonoBehaviour
       playerWidth = newSize;
       playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
 
-      cam.orthographicSize = GetCameraZoom();
+      //cam.orthographicSize = GetCameraZoom();
     }
 
     void OnTriggerEnter2D(Collider2D col)

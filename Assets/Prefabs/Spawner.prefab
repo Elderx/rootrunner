@@ -50,3 +50,7 @@ MonoBehaviour:
   - {fileID: 7115649699857292522, guid: 74846923aaaa25144bc1e3313da660b4, type: 3}
   boosts:
   - {fileID: 6153124057632572141, guid: eda9c0f2b4790ee47b1dbe84681f87f3, type: 3}
+  interval: 0.1
+  spawnRate: 2
+  spawnAreaMinY: -9
+  spawnAreaMaxY: 10
