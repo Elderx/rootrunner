@@ -64,7 +64,7 @@ public class CharacterController2D : MonoBehaviour
 
     private void MovePlayer()
     {
-      player.velocity = transform.right * runSpeed;
+      player.velocity = (transform.up * runSpeed) * -1;
 
       if (player.velocity.y > 0) {
         player.velocity = new Vector2(player.velocity.x, 0);
@@ -76,16 +76,13 @@ public class CharacterController2D : MonoBehaviour
         float rotation = _horizontalInput * rotationSpeed;
         Vector3 newRotate = Vector3.forward * -rotation;
 
-        if (this.player.rotation > 0) {
-          if (this.player.velocity.x > 0) {
-            this.player.rotation = 0;
-          } else if (this.player.velocity.x < 0) {
-            this.player.rotation = 180;
-          }
-          return;
+        if(this.player.rotation >= 60 && rotation < 0) {
+          this.player.rotation = 60;
+        } else if (this.player.rotation <= -60 && rotation > 0) {
+          this.player.rotation = -60;
+        } else {
+          transform.Rotate(newRotate);
         }
-
-        transform.Rotate(newRotate);
     }
 
 
