@@ -154,6 +154,18 @@ public class CharacterController2D : MonoBehaviour
         {
           PlayerSizeChange(sizeChange);
         }
+
+        if (col.gameObject.tag == "Obstacle") {
+          PlayerSizeChange(-sizeChange);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Obstacle")
+        {
+          GameOver();
+        }
     }
 }
 
