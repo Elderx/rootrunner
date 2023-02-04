@@ -150,7 +150,8 @@ public class CharacterController2D : MonoBehaviour
     }
 
     void GameOver() {
-      SceneManager.LoadScene("GameOverScene");
+      SceneManager.LoadScene("MainScene");
+      NavigationManager.GameOver = true;
     }
 
     void PlayerSizeChange(float change) {
