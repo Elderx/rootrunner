@@ -115,8 +115,6 @@ public class CharacterController2D : MonoBehaviour
     void PlayerSizeChange(float change) {
       float newSize = player.transform.localScale.x + change;
 
-      Debug.Log(newSize);
-
       if (newSize > playerMinWidth) {
         playerWidth = newSize;
         playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
