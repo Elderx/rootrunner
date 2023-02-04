@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
- 
+
 public class CharacterController2D : MonoBehaviour
 {
  
@@ -18,10 +18,17 @@ public class CharacterController2D : MonoBehaviour
     public Camera cam; 
 
     private Rigidbody2D player;       //Store a reference to the Rigidbody2D component required to use 2D Physics.
+    private Transform playerTransform;
+
     private List<Vector3> visitedPoints = new List<Vector3>();
     private float _verticalInput = 0;
     private float _horizontalInput = 0;
 
+    public float playerMinWidth = 0.1f;
+    public float playerWidth = 0.1f;
+    private float sizeChange = 0.01f;
+
+    private float zoomMin = 3f;
 
     void Start()
     {
@@ -32,8 +39,14 @@ public class CharacterController2D : MonoBehaviour
 
         visitedPoints.Add(startingPosition.transform.position);
 
-        // float playerRadius = player.GetComponent<CircleCollider2D>().bounds;
-        // lineRenderer.SetWidth(playerRadius, playerRadius);
+        lineRenderer = GetComponent<LineRenderer>();
+
+        playerTransform = player.GetComponent<Transform>();
+        playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0.5f);
+
+        lineRenderer.startWidth = playerWidth;
+
+        cam.orthographicSize = GetCameraZoom();
     }
 
     void Update()
@@ -65,6 +78,8 @@ public class CharacterController2D : MonoBehaviour
 
       lineRenderer.SetPositions(visitedPoints.ToArray());
 
+      lineRenderer.endWidth = playerWidth;
+
       if (visitedPoints.Count > 1) {
         lineRenderer.SetPosition(visitedPoints.Count - 1, player.position);
       }
@@ -73,31 +88,49 @@ public class CharacterController2D : MonoBehaviour
     void UpdateCamera() {
       cam.transform.position = new Vector3(player.position.x, player.position.y, cam.transform.position.z);
     }
+
+    float GetCameraZoom() {
+      return playerWidth * 10 + zoomMin;
+    }
  
     //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
     void FixedUpdate()
     {
-        MovePlayer();
-        RotatePlayer();
-        UpdateCamera();
-    /*
-      if (horizontal != 0 && vertical != 0) // Check for diagonal movement
-      {
-          // limit movement speed diagonally, so you move at 70% speed
-          horizontal *= moveLimiter;
-          vertical *= moveLimiter;
-      } 
+      MovePlayer();
+      RotatePlayer();
+      UpdateCamera();
 
-      player.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
-
-      */
+      PlayerSizeChange(-sizeChange * 0.01f);
 
       Vector2 lastPosition = visitedPoints[visitedPoints.Count - 1];
 
       if (Vector2.Distance(lastPosition, player.position) > visitTreshHold) {
-        visitedPoints.Add(player.transform.position);
-      }
+        float x = player.position.x;
+        float y = player.position.y;
 
+        visitedPoints.Add(player.position);
+      }
+    }
+
+    void PlayerSizeChange(float change) {
+      float newSize = player.transform.localScale.x + change;
+
+      Debug.Log(newSize);
+
+      if (newSize > playerMinWidth) {
+        playerWidth = newSize;
+        playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
+
+        cam.orthographicSize = GetCameraZoom();
+      }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Water")
+        {
+          PlayerSizeChange(sizeChange);
+        }
     }
 }
 
