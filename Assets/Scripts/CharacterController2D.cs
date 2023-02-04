@@ -157,8 +157,18 @@ public class CharacterController2D : MonoBehaviour
     }
 
     void GameOver() {
-      PlayerPrefs.SetInt("highscore", (int)(Mathf.Abs(Mathf.Round(player.position.y))));  
-      PlayerPrefs.Save();
+      int currentRecord = PlayerPrefs.GetInt("highscore");
+
+      int score = (int)Mathf.Abs(Mathf.Round(player.position.y));
+
+      if (currentRecord < score) { 
+        NavigationManager.newRecord = true;
+
+        PlayerPrefs.SetInt("highscore", score);  
+        PlayerPrefs.Save();
+      }
+
+      NavigationManager.score = score;
 
       SceneManager.LoadScene("MainScene");
       NavigationManager.GameOver = true;
