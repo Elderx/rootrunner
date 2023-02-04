@@ -55,7 +55,7 @@ public class CharacterController2D : MonoBehaviour
     private void RotatePlayer()
     {
         float rotation = _horizontalInput * rotationSpeed;
-        transform.Rotate(Vector3.forward * rotation);
+        transform.Rotate(Vector3.forward * -rotation);
     }
 
 
