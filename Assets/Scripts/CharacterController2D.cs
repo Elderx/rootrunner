@@ -33,7 +33,8 @@ public class CharacterController2D : MonoBehaviour
 
     private float zoomMin = 3f;
 
-    public TMP_Text scoreText;
+    public TMP_Text waterText;
+    public TMP_Text depthText;
 
     void Start()
     {
@@ -135,7 +136,8 @@ public class CharacterController2D : MonoBehaviour
         visitedPoints.Add(player.position);
       }
 
-      scoreText.text = "Water: " + (Mathf.Round(playerWidth * 100));
+      waterText.text = "Water: " + (Mathf.Round(playerWidth * 100));
+      depthText.text = "Depth: " + (Mathf.Abs(Mathf.Round(player.position.y)));
 
       if (playerWidth <= 0) {
         GameOver();
