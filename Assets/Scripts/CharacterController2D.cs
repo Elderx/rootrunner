@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -24,11 +26,12 @@ public class CharacterController2D : MonoBehaviour
     // private float _verticalInput = 0;
     private float _horizontalInput = 0;
 
-    public float playerMinWidth = 0.1f;
     public float playerWidth = 0.1f;
     private float sizeChange = 0.01f;
 
     private float zoomMin = 3f;
+
+    public TMP_Text scoreText;
 
     void Start()
     {
@@ -126,17 +129,26 @@ public class CharacterController2D : MonoBehaviour
 
         visitedPoints.Add(player.position);
       }
+
+      scoreText.text = "Water: " + (Mathf.Round(playerWidth * 100));
+
+      if (playerWidth <= 0) {
+        GameOver();
+
+      }
+    }
+
+    void GameOver() {
+      SceneManager.LoadScene("GameOverScene");
     }
 
     void PlayerSizeChange(float change) {
       float newSize = player.transform.localScale.x + change;
 
-      if (newSize > playerMinWidth) {
-        playerWidth = newSize;
-        playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
+      playerWidth = newSize;
+      playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
 
-        cam.orthographicSize = GetCameraZoom();
-      }
+      cam.orthographicSize = GetCameraZoom();
     }
 
     void OnTriggerEnter2D(Collider2D col)
