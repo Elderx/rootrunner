@@ -56,13 +56,9 @@ public class CharacterController2D : MonoBehaviour
         if (PlayerPrefs.HasKey("highscore") == false) {
             PlayerPrefs.SetInt("highscore", 0);
             PlayerPrefs.Save();
-            highscoreText.text = PlayerPrefs.GetInt("highscore").ToString();
-            Debug.Log("Highscore if key false: " + highscoreText.text);
         }
         else {
-            Debug.Log("Highscore if key true: " + highscoreText.text);
-            highscoreText.text = PlayerPrefs.GetInt("highscore").ToString();
-            Debug.Log("Highscore after getint: " + highscoreText.text);
+            highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("highscore").ToString();
         }
     }
 
@@ -132,7 +128,6 @@ public class CharacterController2D : MonoBehaviour
     //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
     void FixedUpdate()
     {
-    Debug.Log("AAAAAAAAA: " + PlayerPrefs.GetInt("highscore").ToString());
       MovePlayer();
       RotatePlayer();
       UpdateCamera();
@@ -157,13 +152,13 @@ public class CharacterController2D : MonoBehaviour
 
 
       if (playerWidth <= 0) {
-        PlayerPrefs.SetInt("Score", (int)(Mathf.Abs(Mathf.Round(player.position.y))));  
-        PlayerPrefs.Save();
         GameOver();
       }
     }
 
     void GameOver() {
+      PlayerPrefs.SetInt("highscore", (int)(Mathf.Abs(Mathf.Round(player.position.y))));  
+      PlayerPrefs.Save();
 
       SceneManager.LoadScene("MainScene");
       NavigationManager.GameOver = true;
