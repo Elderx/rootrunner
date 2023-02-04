@@ -9,6 +9,8 @@ public class CharacterController2D : MonoBehaviour
     float vertical;
     float moveLimiter = 0.7f;
 
+    public float rotationSpeed = 5.0f;
+
     public float runSpeed = 5.0f;
     public GameObject startingPosition;
     public float visitTreshHold = 0.1f;
@@ -16,6 +18,9 @@ public class CharacterController2D : MonoBehaviour
 
     private Rigidbody2D player;       //Store a reference to the Rigidbody2D component required to use 2D Physics.
     private List<Vector3> visitedPoints = new List<Vector3>();
+    private float _verticalInput = 0;
+    private float _horizontalInput = 0;
+
 
     void Start()
     {
@@ -32,12 +37,27 @@ public class CharacterController2D : MonoBehaviour
 
     void Update()
     {
-        // Gives a value between -1 and 1
-        horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
-        vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+        GetPlayerInput();
 
         renderLine();
     }
+
+    private void GetPlayerInput() {
+      _horizontalInput = Input.GetAxisRaw("Horizontal"); // -1 is left
+      _verticalInput = Input.GetAxisRaw("Vertical"); // -1 is down
+    }
+
+    private void MovePlayer()
+    {
+        player.velocity = transform.right * Mathf.Clamp01(_verticalInput) * runSpeed;
+    }
+
+    private void RotatePlayer()
+    {
+        float rotation = _horizontalInput * rotationSpeed;
+        transform.Rotate(Vector3.forward * rotation);
+    }
+
 
     void renderLine () {
       lineRenderer.SetVertexCount(visitedPoints.Count);
@@ -52,6 +72,9 @@ public class CharacterController2D : MonoBehaviour
     //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
     void FixedUpdate()
     {
+        MovePlayer();
+        RotatePlayer();
+    /*
       if (horizontal != 0 && vertical != 0) // Check for diagonal movement
       {
           // limit movement speed diagonally, so you move at 70% speed
@@ -60,6 +83,8 @@ public class CharacterController2D : MonoBehaviour
       } 
 
       player.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+
+      */
 
       Vector2 lastPosition = visitedPoints[visitedPoints.Count - 1];
 
