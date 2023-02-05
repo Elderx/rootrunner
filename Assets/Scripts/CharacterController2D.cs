@@ -26,7 +26,7 @@ public class CharacterController2D : MonoBehaviour
     public Light2D worldLight;
 
     // Rootlight pulse control
-    public GameObject rootlight;
+    public Light2D rootlight;
     public float elapsedTime;
     
     public float maxBrightness = 5.0f;
@@ -65,7 +65,6 @@ public class CharacterController2D : MonoBehaviour
 
         lineRenderer.startWidth = playerWidth;
 
-        rootlight = GameObject.Find("World/Player/rootlight");
 
         if (PlayerPrefs.HasKey("highscore") == false) {
             PlayerPrefs.SetInt("highscore", 0);
@@ -199,12 +198,11 @@ public class CharacterController2D : MonoBehaviour
     }
 
     void UpdateRootLight () {
-      Light2D light = rootlight.GetComponent<Light2D>();
-
       float force = 1 - worldLight.intensity;
 
-      light.pointLightOuterRadius = force * playerTransform.localScale.x * 10 * 2;
-      light.intensity = force * playerTransform.localScale.x * 10;
+      rootlight.intensity = force * playerTransform.localScale.x * 10;
+      rootlight.transform.position = player.position;
+      rootlight.transform.rotation = player.transform.rotation;
     }
 
     void PlayerSizeChange(float change) {
