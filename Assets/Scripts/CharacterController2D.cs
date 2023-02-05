@@ -10,7 +10,6 @@ public class CharacterController2D : MonoBehaviour
  
     float horizontal;
     float vertical;
-    float moveLimiter = 0.7f;
 
     public float rotationSpeed = 5.0f;
 
