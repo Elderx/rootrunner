@@ -97,6 +97,8 @@ public class CharacterController2D : MonoBehaviour
 
         MovePlayer();
 
+        MobileInput();
+
         renderLine();
 
         // ENABLE_KILL_MODE();
@@ -135,6 +137,18 @@ public class CharacterController2D : MonoBehaviour
         } else {
           transform.Rotate(newRotate);
         }
+    }
+
+    private void MobileInput() {
+      if (Input.touchCount > 0) {
+        Touch touch = Input.GetTouch(0);
+
+        if (touch.position.x < Screen.width / 2) {
+          _horizontalInput = -1;
+        } else {
+          _horizontalInput = 1;
+        }
+      }
     }
 
 
