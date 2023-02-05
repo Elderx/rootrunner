@@ -13,6 +13,16 @@ public class NavigationManager : MonoBehaviour
     public TMP_Text headerText;
     public TMP_Text subHeaderText;
     public TMP_Text buttonText;
+    public Transform tree;
+
+    private float treeMinSize = 2.0f;
+    private float treeMaxSize = 10.0f;
+
+    private float scoreForMaxTreeSize = 500.0f;
+
+    float GetTreeSize (float _score) {
+      return treeMinSize + treeMaxSize * Mathf.Min((float) _score / scoreForMaxTreeSize, 1);
+    }
 
     void Start() {
       if (GameOver) {
@@ -25,8 +35,20 @@ public class NavigationManager : MonoBehaviour
         }
 
         buttonText.text = "Play Again";
+
+        float treeSize = GetTreeSize(score);
+
+        tree.transform.localScale = new Vector3(treeSize, treeSize, 1.0f);
       } else {
         headerText.text = "Root runner";
+
+        if (PlayerPrefs.HasKey("highscore") == true) {
+          float treeSize = GetTreeSize(score);
+          tree.transform.localScale = new Vector3(treeSize, treeSize, 1.0f);
+
+          subHeaderText.text = "Highscore: " + PlayerPrefs.GetInt("highscore");
+        }
+
         buttonText.text = "Play";
       }
     }
