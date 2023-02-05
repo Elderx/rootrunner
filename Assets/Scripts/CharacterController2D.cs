@@ -51,6 +51,8 @@ public class CharacterController2D : MonoBehaviour
 
     void Start()
     {
+
+        Debug.Log("Character controller start");
         //Get and store a reference to the Rigidbody2D component so that we can access it.
         player = GetComponent<Rigidbody2D>();
 
@@ -79,6 +81,14 @@ public class CharacterController2D : MonoBehaviour
 
         minX = topLeft.x;
         maxX = topRight.x;
+
+        Debug.Log("Before in start: " + rootlight.transform.rotation.eulerAngles);
+
+        rootlight.transform.rotation.eulerAngles.Set(0, 0, 180f);
+
+        Debug.Log("After in start: " + rootlight.transform.rotation.eulerAngles);
+
+        
     }
 
     void Update()
@@ -109,6 +119,8 @@ public class CharacterController2D : MonoBehaviour
       } else if (player.position.x <= minX) {
         player.position = new Vector2(minX, player.position.y);
       }
+
+      UpdateRootLight();
     }
 
     private void RotatePlayer()
@@ -203,6 +215,13 @@ public class CharacterController2D : MonoBehaviour
       rootlight.intensity = Mathf.Min(2, force * playerTransform.localScale.x * 25);
       rootlight.transform.position = player.position;
       rootlight.transform.rotation = player.transform.rotation;
+
+      rootlight.transform.Rotate(new Vector3(0, 0, 180));
+
+      //Debug.Log("Angle before: " + angle);
+
+
+      //Debug.Log("Angle after: " + angle);
     }
 
     void PlayerSizeChange(float change) {
@@ -211,7 +230,7 @@ public class CharacterController2D : MonoBehaviour
       playerWidth = newSize;
       playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
 
-      UpdateRootLight();
+      //UpdateRootLight();
     }
     
     void OnTriggerEnter2D(Collider2D col)
