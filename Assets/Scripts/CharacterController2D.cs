@@ -234,7 +234,7 @@ public class CharacterController2D : MonoBehaviour
     {
     elapsedTime = Time.realtimeSinceStartup;
 
-        if (elapsedTime > 60) {
+        if (elapsedTime > 5) {
             float addPart = (direction < 0 ? -1*((das/blinkingInterval)* Time.deltaTime - 5) : ((das/blinkingInterval)* Time.deltaTime - 5));
             float intensity = rootlight.GetComponent<Light2D>().intensity + addPart;
             rootlight.GetComponent<Light2D>().intensity = intensity;
