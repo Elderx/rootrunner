@@ -23,6 +23,7 @@ public class CharacterController2D : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip drinkSound;
     public AudioClip crashSound;
+    public Light2D worldLight;
 
     // Rootlight pulse control
     public GameObject rootlight;
@@ -197,13 +198,22 @@ public class CharacterController2D : MonoBehaviour
       NavigationManager.GameOver = true;
     }
 
+    void UpdateRootLight () {
+      Light2D light = rootlight.GetComponent<Light2D>();
+
+      float force = 1 - worldLight.intensity;
+
+      light.pointLightOuterRadius = force * playerTransform.localScale.x * 10 * 2;
+      light.intensity = force * playerTransform.localScale.x * 10;
+    }
+
     void PlayerSizeChange(float change) {
       float newSize = player.transform.localScale.x + change;
 
       playerWidth = newSize;
       playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
 
-      //cam.orthographicSize = GetCameraZoom();
+      UpdateRootLight();
     }
     
     void OnTriggerEnter2D(Collider2D col)
