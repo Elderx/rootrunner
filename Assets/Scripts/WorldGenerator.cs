@@ -43,11 +43,6 @@ public class WorldGenerator : MonoBehaviour
             SpawnObject(boosts);
         }
 
-        if((0 - mainCamera.position.y) % 10 >= 0 && (0 - mainCamera.position.y) % 10 <= 0.2f)
-        {
-            SpawnBackground(mainCamera.position.y - 10);
-        }
-
         CleanupObjects();
     }
 
@@ -56,6 +51,11 @@ public class WorldGenerator : MonoBehaviour
         if(worldLight.intensity >= 0.2f) 
         {
             worldLight.intensity = 1 - (-mainCamera.position.y / 200);
+        }
+
+        if((0 - mainCamera.position.y) % 10 >= 0 && (0 - mainCamera.position.y) % 10 <= 0.2f)
+        {
+            SpawnBackground(mainCamera.position.y - 10);
         }
     }
 

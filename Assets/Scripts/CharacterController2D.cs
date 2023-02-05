@@ -22,6 +22,7 @@ public class CharacterController2D : MonoBehaviour
     public Camera cam; 
     public AudioSource audioSource;
     public AudioClip drinkSound;
+    public AudioClip crashSound;
 
     private Rigidbody2D player;       //Store a reference to the Rigidbody2D component required to use 2D Physics.
     private Transform playerTransform;
@@ -108,7 +109,7 @@ public class CharacterController2D : MonoBehaviour
 
 
     void renderLine () {
-      lineRenderer.SetVertexCount(visitedPoints.Count);
+      lineRenderer.positionCount = visitedPoints.Count;
 
       lineRenderer.SetPositions(visitedPoints.ToArray());
 
@@ -189,12 +190,13 @@ public class CharacterController2D : MonoBehaviour
     {
         if (col.gameObject.tag == "Water")
         {
+          audioSource.PlayOneShot(drinkSound);
           PlayerSizeChange(sizeChange);
           Destroy(col.gameObject);
-          audioSource.PlayOneShot(drinkSound);
         }
 
         if (col.gameObject.tag == "Obstacle") {
+          audioSource.PlayOneShot(crashSound);
           PlayerSizeChange(-sizeChange);
         }
     }
