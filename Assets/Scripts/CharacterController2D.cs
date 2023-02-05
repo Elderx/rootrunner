@@ -29,9 +29,8 @@ public class CharacterController2D : MonoBehaviour
     public GameObject rootlight;
     public float elapsedTime;
     
-    public float maxBrightness = 5f;
-    public float blinkingInterval = 0f;
-    public float das = 1f;
+    public float maxBrightness = 5.0f;
+    public float das = 1.0f;
     private int direction = -1;
 
     private Rigidbody2D player;       //Store a reference to the Rigidbody2D component required to use 2D Physics.
@@ -85,10 +84,7 @@ public class CharacterController2D : MonoBehaviour
 
         renderLine();
 
-        ENABLE_KILL_MODE();
-
-
-        Debug.Log("Rootlight intensity: " + rootlight.GetComponent<Light2D>().intensity);
+        // ENABLE_KILL_MODE();
     }
 
     private void GetPlayerInput() {
@@ -206,9 +202,6 @@ public class CharacterController2D : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         
-       
-        //rootlight.GetComponent<Light2D>().intensity = 10.0f;
-
         if (col.gameObject.tag == "Water")
         {
           audioSource.PlayOneShot(drinkSound);
@@ -233,14 +226,14 @@ public class CharacterController2D : MonoBehaviour
     void ENABLE_KILL_MODE() 
     {
     elapsedTime = Time.realtimeSinceStartup;
+      if (elapsedTime > 5) {
+        float addPart = direction < 0 ? -1 * (das * Time.deltaTime - 5) : das * Time.deltaTime - 5;
+        float intensity = rootlight.GetComponent<Light2D>().intensity + addPart;
 
-        if (elapsedTime > 5) {
-            float addPart = (direction < 0 ? -1*((das/blinkingInterval)* Time.deltaTime - 5) : ((das/blinkingInterval)* Time.deltaTime - 5));
-            float intensity = rootlight.GetComponent<Light2D>().intensity + addPart;
-            rootlight.GetComponent<Light2D>().intensity = intensity;
+        rootlight.GetComponent<Light2D>().intensity = intensity;
 
-            if (intensity <= 0 || intensity >= maxBrightness) direction *= -1;
-        }
+        if (intensity <= 0 || intensity >= maxBrightness) direction *= -1;
+      }
     }
 }
 
