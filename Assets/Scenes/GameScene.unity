@@ -1397,8 +1397,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 5
   runSpeed: 5
-  minX: -8.5
-  maxX: 8.5
+  minX: -20
+  maxX: 20
   startingPosition: {fileID: 108784733}
   visitTreshHold: 0.1
   lineRenderer: {fileID: 2029901125}

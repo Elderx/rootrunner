@@ -16,15 +16,20 @@ public class WorldGenerator : MonoBehaviour
 
     [Tooltip("Obstacle spawn rate")]
     [SerializeField] private int spawnRate = 1;
-    [SerializeField] int spawnAreaMinY = -9;
-    [SerializeField] int spawnAreaMaxY = 10;
+    private float spawnAreaMinX = -9;
+    private float spawnAreaMaxX = 10;
 
     float elapsed = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Camera cam = mainCamera.GetComponent<Camera>();
+        Vector2 topLeft = cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight, cam.nearClipPlane));
+        Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
+
+        spawnAreaMinX = topLeft.x;
+        spawnAreaMaxX = topRight.x;
     }
 
     // Update is called once per frame
@@ -61,7 +66,7 @@ public class WorldGenerator : MonoBehaviour
 
     void SpawnObject(GameObject[] spawnObjects)
     {
-        Vector2 position = new Vector2(Random.Range(spawnAreaMinY, spawnAreaMaxY), mainCamera.position.y - Random.Range(10, 30));
+        Vector2 position = new Vector2(Random.Range(spawnAreaMinX, spawnAreaMaxX), mainCamera.position.y - Random.Range(10, 30));
         GameObject newObject = Instantiate(spawnObjects[Random.Range(0, spawnObjects.Length)], position, Quaternion.identity);
 
         //Not great but maybe it works

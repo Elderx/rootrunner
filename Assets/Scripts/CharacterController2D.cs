@@ -14,8 +14,8 @@ public class CharacterController2D : MonoBehaviour
     public float rotationSpeed = 5.0f;
 
     public float runSpeed = 5.0f;
-    public float minX = -8.5f;
-    public float maxX = 8.5f;
+    private float minX = -8.5f;
+    private float maxX = 8.5f;
     public GameObject startingPosition;
     public float visitTreshHold = 0.1f;
     public LineRenderer lineRenderer;
@@ -73,6 +73,12 @@ public class CharacterController2D : MonoBehaviour
         else {
             highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("highscore").ToString();
         }
+
+        Vector2 topLeft = cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight, cam.nearClipPlane));
+        Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth, cam.pixelHeight, cam.nearClipPlane));
+
+        minX = topLeft.x;
+        maxX = topRight.x;
     }
 
     void Update()
