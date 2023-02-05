@@ -1406,6 +1406,10 @@ MonoBehaviour:
   audioSource: {fileID: 1663575001}
   drinkSound: {fileID: 8300000, guid: e0ad79b6fa30665428c80599a3d7db12, type: 3}
   crashSound: {fileID: 8300000, guid: 497a45841d1b3be449809bc23dc58619, type: 3}
+  rootlight: {fileID: 0}
+  elapsedTime: 0
+  maxBrightness: 5
+  das: 1
   playerWidth: 0.1
   waterText: {fileID: 1296928730}
   depthText: {fileID: 1724154574}
@@ -6566,6 +6570,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 899653933212739238, guid: 259c43c614a7cc34bbd73086d3f59a54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.07
+      objectReference: {fileID: 0}
     - target: {fileID: 4210822567408597261, guid: 259c43c614a7cc34bbd73086d3f59a54, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.9999999
