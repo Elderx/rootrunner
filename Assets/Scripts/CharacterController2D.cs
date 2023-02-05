@@ -182,6 +182,8 @@ public class CharacterController2D : MonoBehaviour
 
         PlayerPrefs.SetInt("highscore", score);  
         PlayerPrefs.Save();
+      } else {
+        NavigationManager.newRecord = false;
       }
 
       NavigationManager.score = score;
