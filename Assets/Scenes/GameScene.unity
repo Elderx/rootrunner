@@ -1406,7 +1406,7 @@ MonoBehaviour:
   audioSource: {fileID: 1663575001}
   drinkSound: {fileID: 8300000, guid: e0ad79b6fa30665428c80599a3d7db12, type: 3}
   crashSound: {fileID: 8300000, guid: 497a45841d1b3be449809bc23dc58619, type: 3}
-  rootlight: {fileID: 0}
+  rootlight: {fileID: 1843120975}
   elapsedTime: 0
   maxBrightness: 5
   das: 1

@@ -191,13 +191,20 @@ public class CharacterController2D : MonoBehaviour
       NavigationManager.GameOver = true;
     }
 
+    void UpdateRootLight () {
+      Light2D light = rootlight.GetComponent<Light2D>();
+
+      light.pointLightOuterRadius = playerTransform.localScale.x * 10 * 2;
+      light.intensity = playerTransform.localScale.x * 10;
+    }
+
     void PlayerSizeChange(float change) {
       float newSize = player.transform.localScale.x + change;
 
       playerWidth = newSize;
       playerTransform.localScale = new Vector3(playerWidth, playerWidth, 0);
 
-      //cam.orthographicSize = GetCameraZoom();
+      UpdateRootLight();
     }
     
     void OnTriggerEnter2D(Collider2D col)
