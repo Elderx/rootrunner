@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -23,6 +24,15 @@ public class CharacterController2D : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip drinkSound;
     public AudioClip crashSound;
+
+    // Rootlight pulse control
+    public GameObject rootlight;
+    public float elapsedTime;
+    
+    public float maxBrightness = 5f;
+    public float blinkingInterval = 0f;
+    public float das = 1f;
+    private int direction = -1;
 
     private Rigidbody2D player;       //Store a reference to the Rigidbody2D component required to use 2D Physics.
     private Transform playerTransform;
@@ -56,6 +66,8 @@ public class CharacterController2D : MonoBehaviour
 
         lineRenderer.startWidth = playerWidth;
 
+        rootlight = GameObject.Find("World/Player/rootlight");
+
         if (PlayerPrefs.HasKey("highscore") == false) {
             PlayerPrefs.SetInt("highscore", 0);
             PlayerPrefs.Save();
@@ -72,6 +84,11 @@ public class CharacterController2D : MonoBehaviour
         MovePlayer();
 
         renderLine();
+
+        ENABLE_KILL_MODE();
+
+
+        Debug.Log("Rootlight intensity: " + rootlight.GetComponent<Light2D>().intensity);
     }
 
     private void GetPlayerInput() {
@@ -185,9 +202,13 @@ public class CharacterController2D : MonoBehaviour
 
       //cam.orthographicSize = GetCameraZoom();
     }
-
+    
     void OnTriggerEnter2D(Collider2D col)
     {
+        
+       
+        //rootlight.GetComponent<Light2D>().intensity = 10.0f;
+
         if (col.gameObject.tag == "Water")
         {
           audioSource.PlayOneShot(drinkSound);
@@ -206,6 +227,19 @@ public class CharacterController2D : MonoBehaviour
         if (col.gameObject.tag == "Obstacle")
         {
           GameOver();
+        }
+    }
+
+    void ENABLE_KILL_MODE() 
+    {
+    elapsedTime = Time.realtimeSinceStartup;
+
+        if (elapsedTime > 60) {
+            float addPart = (direction < 0 ? -1*((das/blinkingInterval)* Time.deltaTime - 5) : ((das/blinkingInterval)* Time.deltaTime - 5));
+            float intensity = rootlight.GetComponent<Light2D>().intensity + addPart;
+            rootlight.GetComponent<Light2D>().intensity = intensity;
+
+            if (intensity <= 0 || intensity >= maxBrightness) direction *= -1;
         }
     }
 }
