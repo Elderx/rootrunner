@@ -53,10 +53,7 @@ public class WorldGenerator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(worldLight.intensity >= 0.2f) 
-        {
-            worldLight.intensity = 1 - (-mainCamera.position.y / 200);
-        }
+        worldLight.intensity = 1 - (-mainCamera.position.y / 50);
 
         if((0 - mainCamera.position.y) % 10 >= 0 && (0 - mainCamera.position.y) % 10 <= 0.2f)
         {
