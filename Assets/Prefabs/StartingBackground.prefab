@@ -1,5 +1,42 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1091838014300324364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4210822567408597261}
+  m_Layer: 0
+  m_Name: TreeParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4210822567408597261
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091838014300324364}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5.396959}
+  m_LocalScale: {x: 0.28000003, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 6233645280269641107}
+  m_Father: {fileID: 9047202560771146885}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4.273, y: 0.8253}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9047202558733756796
 GameObject:
   m_ObjectHideFlags: 0
@@ -8,7 +45,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9047202558733756787}
+  - component: {fileID: 6233645280269641107}
   - component: {fileID: 9047202558733756786}
   m_Layer: 0
   m_Name: Tree
@@ -17,21 +54,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9047202558733756787
-Transform:
+--- !u!224 &6233645280269641107
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9047202558733756796}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.324, y: 2.41, z: -5.4604173}
-  m_LocalScale: {x: 4.51, y: 5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: -0.06345844}
+  m_LocalScale: {x: 1, y: 1, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 9047202560771146885}
-  m_RootOrder: 3
+  m_Father: {fileID: 4210822567408597261}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 50.3197}
+  m_SizeDelta: {x: 0.64, y: 0.6399994}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &9047202558733756786
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -367,8 +409,8 @@ Transform:
   - {fileID: 9047202558881186407}
   - {fileID: 9047202558955416037}
   - {fileID: 9047202558822074595}
-  - {fileID: 9047202558733756787}
   - {fileID: 9047202558884086561}
+  - {fileID: 4210822567408597261}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -381,7 +423,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8191392536005908636, guid: 0492c57e39e03874f9fd5b838cb25630, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8191392536005908636, guid: 0492c57e39e03874f9fd5b838cb25630, type: 3}
       propertyPath: m_LocalPosition.x
