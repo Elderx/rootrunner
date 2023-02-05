@@ -23,6 +23,7 @@ public class CharacterController2D : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip drinkSound;
     public AudioClip crashSound;
+    public Light2D worldLight;
 
     // Rootlight pulse control
     public GameObject rootlight;
@@ -194,8 +195,10 @@ public class CharacterController2D : MonoBehaviour
     void UpdateRootLight () {
       Light2D light = rootlight.GetComponent<Light2D>();
 
-      light.pointLightOuterRadius = playerTransform.localScale.x * 10 * 2;
-      light.intensity = playerTransform.localScale.x * 10;
+      float force = 1 - worldLight.intensity;
+
+      light.pointLightOuterRadius = force * playerTransform.localScale.x * 10 * 2;
+      light.intensity = force * playerTransform.localScale.x * 10;
     }
 
     void PlayerSizeChange(float change) {
