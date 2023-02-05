@@ -200,7 +200,7 @@ public class CharacterController2D : MonoBehaviour
     void UpdateRootLight () {
       float force = 1 - worldLight.intensity;
 
-      rootlight.intensity = force * playerTransform.localScale.x * 10;
+      rootlight.intensity = Mathf.Min(2, force * playerTransform.localScale.x * 25);
       rootlight.transform.position = player.position;
       rootlight.transform.rotation = player.transform.rotation;
     }
